@@ -8,17 +8,17 @@
 , makeWrapper
 , vips
 , sourceInfo
-, src ? null
+, gatewaySrc ? null
 , pnpmDepsHash ? null
 }:
 
-assert src == null || pnpmDepsHash != null;
+assert gatewaySrc == null || pnpmDepsHash != null;
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "clawdis-gateway";
   version = "2.0.0-beta4";
 
-  src = if src != null then src else fetchFromGitHub sourceInfo;
+  src = if gatewaySrc != null then gatewaySrc else fetchFromGitHub sourceInfo;
 
   pnpmDeps = pnpm_10.fetchDeps {
     inherit (finalAttrs) pname version src;

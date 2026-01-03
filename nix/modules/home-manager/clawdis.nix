@@ -532,7 +532,7 @@ let
     gatewayPackage =
       if inst.gatewayPath != null then
         pkgs.callPackage ../../packages/clawdis-gateway.nix {
-          src = builtins.path {
+          gatewaySrc = builtins.path {
             path = inst.gatewayPath;
             name = "clawdis-gateway-src";
           };
