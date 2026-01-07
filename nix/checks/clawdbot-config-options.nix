@@ -78,6 +78,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   buildPhase = "${../scripts/gateway-tests-build.sh}";
+  postPatch = "${../scripts/gateway-postpatch.sh}";
 
   doCheck = true;
   checkPhase = "${../scripts/config-options-check.sh}";

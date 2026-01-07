@@ -38,6 +38,58 @@ in
     blockStreamingDefault = lib.mkOption {
       type = t.oneOf [ t.enum [ "off" ] t.enum [ "on" ] ];
     };
+    contextPruning = lib.mkOption {
+      type = t.submodule { options = {
+      hardClear = lib.mkOption {
+        type = t.submodule { options = {
+        enabled = lib.mkOption {
+          type = t.bool;
+        };
+        placeholder = lib.mkOption {
+          type = t.str;
+        };
+      }; };
+      };
+      hardClearRatio = lib.mkOption {
+        type = t.number;
+      };
+      keepLastAssistants = lib.mkOption {
+        type = t.int;
+      };
+      minPrunableToolChars = lib.mkOption {
+        type = t.int;
+      };
+      mode = lib.mkOption {
+        type = t.oneOf [ t.enum [ "off" ] t.enum [ "adaptive" ] t.enum [ "aggressive" ] ];
+      };
+      softTrim = lib.mkOption {
+        type = t.submodule { options = {
+        headChars = lib.mkOption {
+          type = t.int;
+        };
+        maxChars = lib.mkOption {
+          type = t.int;
+        };
+        tailChars = lib.mkOption {
+          type = t.int;
+        };
+      }; };
+      };
+      softTrimRatio = lib.mkOption {
+        type = t.number;
+      };
+      tools = lib.mkOption {
+        type = t.submodule { options = {
+        allow = lib.mkOption {
+          type = t.listOf (t.str);
+        };
+        deny = lib.mkOption {
+          type = t.listOf (t.str);
+        };
+      }; };
+      };
+    }; };
+    };
     contextTokens = lib.mkOption {
       type = t.int;
     };
@@ -531,8 +583,20 @@ in
         allow = lib.mkOption {
           type = t.bool;
         };
+        enabled = lib.mkOption {
+          type = t.bool;
+        };
         requireMention = lib.mkOption {
           type = t.bool;
+        };
+        skills = lib.mkOption {
+          type = t.listOf (t.str);
+        };
+        systemPrompt = lib.mkOption {
+          type = t.str;
+        };
+        users = lib.mkOption {
+          type = t.listOf (t.oneOf [ t.str t.number ]);
         };
       }; });
       };
@@ -1028,8 +1092,31 @@ in
         scope = lib.mkOption {
           type = t.oneOf [ t.enum [ "session" ] t.enum [ "agent" ] t.enum [ "shared" ] ];
         };
+        tools = lib.mkOption {
+          type = t.submodule { options = {
+          allow = lib.mkOption {
+            type = t.listOf (t.str);
+          };
+          deny = lib.mkOption {
+            type = t.listOf (t.str);
+          };
+        }; };
+        };
+        workspaceAccess = lib.mkOption {
+          type = t.oneOf [ t.enum [ "none" ] t.enum [ "ro" ] t.enum [ "rw" ] ];
+        };
         workspaceRoot = lib.mkOption {
           type = t.str;
+        };
+      }; };
+      };
+      tools = lib.mkOption {
+        type = t.submodule { options = {
+        allow = lib.mkOption {
+          type = t.listOf (t.str);
+        };
+        deny = lib.mkOption {
+          type = t.listOf (t.str);
         };
       }; };
       };
@@ -1333,8 +1420,20 @@ in
       allow = lib.mkOption {
         type = t.bool;
       };
+      enabled = lib.mkOption {
+        type = t.bool;
+      };
       requireMention = lib.mkOption {
         type = t.bool;
+      };
+      skills = lib.mkOption {
+        type = t.listOf (t.str);
+      };
+      systemPrompt = lib.mkOption {
+        type = t.str;
+      };
+      users = lib.mkOption {
+        type = t.listOf (t.oneOf [ t.str t.number ]);
       };
     }; });
     };
@@ -1446,8 +1545,39 @@ in
     };
     groups = lib.mkOption {
       type = t.attrsOf (t.submodule { options = {
+      allowFrom = lib.mkOption {
+        type = t.listOf (t.oneOf [ t.str t.number ]);
+      };
+      enabled = lib.mkOption {
+        type = t.bool;
+      };
       requireMention = lib.mkOption {
         type = t.bool;
+      };
+      skills = lib.mkOption {
+        type = t.listOf (t.str);
+      };
+      systemPrompt = lib.mkOption {
+        type = t.str;
+      };
+      topics = lib.mkOption {
+        type = t.attrsOf (t.submodule { options = {
+        allowFrom = lib.mkOption {
+          type = t.listOf (t.oneOf [ t.str t.number ]);
+        };
+        enabled = lib.mkOption {
+          type = t.bool;
+        };
+        requireMention = lib.mkOption {
+          type = t.bool;
+        };
+        skills = lib.mkOption {
+          type = t.listOf (t.str);
+        };
+        systemPrompt = lib.mkOption {
+          type = t.str;
+        };
+      }; });
       };
     }; });
     };
@@ -1459,6 +1589,9 @@ in
     };
     replyToMode = lib.mkOption {
       type = t.oneOf [ t.enum [ "off" ] t.enum [ "first" ] t.enum [ "all" ] ];
+    };
+    streamMode = lib.mkOption {
+      type = t.enum [ "off" "partial" "block" ];
     };
     textChunkLimit = lib.mkOption {
       type = t.int;
