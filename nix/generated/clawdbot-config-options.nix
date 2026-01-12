@@ -242,6 +242,81 @@ in
       mediaMaxMb = lib.mkOption {
         type = t.number;
       };
+      memorySearch = lib.mkOption {
+        type = t.submodule { options = {
+        chunking = lib.mkOption {
+          type = t.submodule { options = {
+          overlap = lib.mkOption {
+            type = t.int;
+          };
+          tokens = lib.mkOption {
+            type = t.int;
+          };
+        }; };
+        };
+        enabled = lib.mkOption {
+          type = t.bool;
+        };
+        fallback = lib.mkOption {
+          type = t.oneOf [ t.enum [ "openai" ] t.enum [ "none" ] ];
+        };
+        local = lib.mkOption {
+          type = t.submodule { options = {
+          modelCacheDir = lib.mkOption {
+            type = t.str;
+          };
+          modelPath = lib.mkOption {
+            type = t.str;
+          };
+        }; };
+        };
+        model = lib.mkOption {
+          type = t.str;
+        };
+        provider = lib.mkOption {
+          type = t.oneOf [ t.enum [ "openai" ] t.enum [ "local" ] ];
+        };
+        query = lib.mkOption {
+          type = t.submodule { options = {
+          maxResults = lib.mkOption {
+            type = t.int;
+          };
+          minScore = lib.mkOption {
+            type = t.number;
+          };
+        }; };
+        };
+        store = lib.mkOption {
+          type = t.submodule { options = {
+          driver = lib.mkOption {
+            type = t.enum [ "sqlite" ];
+          };
+          path = lib.mkOption {
+            type = t.str;
+          };
+        }; };
+        };
+        sync = lib.mkOption {
+          type = t.submodule { options = {
+          intervalMinutes = lib.mkOption {
+            type = t.int;
+          };
+          onSearch = lib.mkOption {
+            type = t.bool;
+          };
+          onSessionStart = lib.mkOption {
+            type = t.bool;
+          };
+          watch = lib.mkOption {
+            type = t.bool;
+          };
+          watchDebounceMs = lib.mkOption {
+            type = t.int;
+          };
+        }; };
+        };
+      }; };
+      };
       model = lib.mkOption {
         type = t.submodule { options = {
         fallbacks = lib.mkOption {
@@ -488,6 +563,81 @@ in
         };
         theme = lib.mkOption {
           type = t.str;
+        };
+      }; };
+      };
+      memorySearch = lib.mkOption {
+        type = t.submodule { options = {
+        chunking = lib.mkOption {
+          type = t.submodule { options = {
+          overlap = lib.mkOption {
+            type = t.int;
+          };
+          tokens = lib.mkOption {
+            type = t.int;
+          };
+        }; };
+        };
+        enabled = lib.mkOption {
+          type = t.bool;
+        };
+        fallback = lib.mkOption {
+          type = t.oneOf [ t.enum [ "openai" ] t.enum [ "none" ] ];
+        };
+        local = lib.mkOption {
+          type = t.submodule { options = {
+          modelCacheDir = lib.mkOption {
+            type = t.str;
+          };
+          modelPath = lib.mkOption {
+            type = t.str;
+          };
+        }; };
+        };
+        model = lib.mkOption {
+          type = t.str;
+        };
+        provider = lib.mkOption {
+          type = t.oneOf [ t.enum [ "openai" ] t.enum [ "local" ] ];
+        };
+        query = lib.mkOption {
+          type = t.submodule { options = {
+          maxResults = lib.mkOption {
+            type = t.int;
+          };
+          minScore = lib.mkOption {
+            type = t.number;
+          };
+        }; };
+        };
+        store = lib.mkOption {
+          type = t.submodule { options = {
+          driver = lib.mkOption {
+            type = t.enum [ "sqlite" ];
+          };
+          path = lib.mkOption {
+            type = t.str;
+          };
+        }; };
+        };
+        sync = lib.mkOption {
+          type = t.submodule { options = {
+          intervalMinutes = lib.mkOption {
+            type = t.int;
+          };
+          onSearch = lib.mkOption {
+            type = t.bool;
+          };
+          onSessionStart = lib.mkOption {
+            type = t.bool;
+          };
+          watch = lib.mkOption {
+            type = t.bool;
+          };
+          watchDebounceMs = lib.mkOption {
+            type = t.int;
+          };
+        }; };
         };
       }; };
       };
