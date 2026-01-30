@@ -22,7 +22,7 @@ let
       })
     ];
   };
-  evalKey = builtins.deepSeq eval.config.home.file "ok";
+  evalKey = builtins.deepSeq eval.config.home.packages "ok";
 in
 pkgs.stdenvNoCC.mkDerivation {
   name = "openclaw-first-party-plugins-${evalKey}";
