@@ -1370,7 +1370,7 @@ in
         type = t.str;
       };
       driver = lib.mkOption {
-        type = t.oneOf [ t.enum [ "clawd" ] t.enum [ "extension" ] ];
+        type = t.oneOf [ t.enum [ "openclaw" ] t.enum [ "extension" ] ];
       };
     }; });
     };
@@ -4816,6 +4816,9 @@ in
     };
     wideArea = lib.mkOption {
       type = t.submodule { options = {
+      domain = lib.mkOption {
+        type = t.str;
+      };
       enabled = lib.mkOption {
         type = t.bool;
       };
