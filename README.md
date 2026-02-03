@@ -125,7 +125,7 @@ What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
 2. Create a local flake at ~/code/openclaw-local using templates/agent-first/flake.nix
 3. Create a docs dir next to the config (e.g., ~/code/openclaw-local/documents) with AGENTS.md, SOUL.md, TOOLS.md (optional: IDENTITY.md, USER.md, LORE.md, HEARTBEAT.md, PROMPTING-EXAMPLES.md)
-   - If ~/.openclaw/workspace already has these files, adopt them into the documents dir first
+   - If ~/.openclaw/workspace already has these files, adopt them into the documents dir first (use copy/rsync that dereferences symlinks, e.g. `cp -L`)
 4. Help me create a Telegram bot (@BotFather) and get my chat ID (@userinfobot)
 5. Set up secrets (bot token, Anthropic key) - plain files at ~/.secrets/ is fine
 6. Fill in the template placeholders and run home-manager switch
